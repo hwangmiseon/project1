@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<body>
+    <div>송인범</div>
+    <div>염호준</div>
+    <div>남기문</div>
+    <div>염호쭌</div>
+</body>
+<script>
+    // ECMA Script6 -> ES6 (IE11 지원안됨), ES5
+    // let const class => module
+    function f_ck() {
+        for(var i = 1; i <= 5; i++) {
+
+        }
+         // i는 function안에서 선언되면 function안에서 사용가능 ({} 가 상관없음)
+        alert(i);  
+    } 
+    f_ck();
+    
+    // let 블락 스코프 변수
+    // typescript babel.js traceur -> 트랜스파일러(파일변환기)
+    function f_ck() {
+        for(let i = 1; i <= 5; i++) {
+
+        }
+        alert(i);  // {} 안에 선언되면 {} 안에서만 사용가능
+    } 
+    f_ck();
+</script>

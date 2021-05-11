@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script src="myQuery.js"></script>
+
+<body>
+    <div>고양이</div>
+    <div class="cat">샴</div>
+    <div>노르웨이숲</div>
+    <div class="cat">코커스파니엘</div>
+    <div class="cat">댕댕이</div>
+    <!-- jQuery의 이해 -->
+    <script>
+        
+        // console.log($("div").html() + "귀여웡");
+        // console.log($("div.cat").html("강아지도") + "귀여웡");
+        // div 태그이면서 class가 cat인것
+        // html("강아지도") 로 값을 쓰면 해당 html로 덮어써버림
+        
+        // java의 람다처럼 사용가능
+        // html 안에서 항상 for문 함수 실행, 콜백함수 실행,
+        $("div.cat").html(function(p_inx, p_inStr){
+            // alert(p_inx + " " + p_inStr);
+            if(p_inx == 1) {    // p_inStr + "코커스파니엘"
+                return p_inStr + "bbogul";
+            }   
+            return p_inStr;
+       }); 
+    /* *************************************************************************** */
+    // console.log($("div").html("ggg"));  // undifined : for문만 돌리고 return 이 없음
+    // .html("html을 또 쓸수 있는지");  // mydom 이 나오면 html을 또 쓸수 있음
+    
+    console.log($("div").html("ggg").html("<h1>html을 또 쓸수 있다!</h1>"));
+
+    </script>
+</body>

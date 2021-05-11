@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="id_disp"></div>
+    <form id="id_form" action="start.html">
+        아이디<input type=text name="nm_id" value=""><br> 
+        암호<input type=password name="nm_pw" value=""><br>
+        <select name="nm_grade">
+            <option value="wonder">초특급</option>
+            <option value="super">특급</option>
+            <option value="batman">고급</option>
+        </select>
+        <div name="nm_chacha">난 쓸데없는 거</div>
+        <input type=submit id="id_sub">
+    </form>
+
+<script>
+    var v_btn = document.querySelector("#id_sub");
+    var v_form = document.querySelector("#id_form");
+    v_btn.addEventListener("click",function(){
+
+        event.preventDefault();  // form 전송 막기
+
+        var v_formData = new FormData(v_form);  // 좋은게 있어서 안 만들어도 됨
+
+        /* 손을 조금만 보면 잘 만들 수 있지만, 안 만들기로
+        var v_data ="";
+        for(var i=0; i<v_form.elements.length; i++){
+            v_data += v_form.elements[i].name + "=" + v_form.elements[i].value + "&";
+        }
+        alert(v_data);  // 눈으로 확인 꿔리스트링
+        */
+
+        var v_ajax = new XMLHttpRequest();
+        v_ajax.open("post","post.php?cat=cute",true);
+        /* Content-Type 기본값이 text/plain이라고 안됨*/
+        // v_ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        // FormData를 쓸땐 위에 걸 쓰지 않는다. 직접 값을 써 줄때만 쓴다
+        v_ajax.onreadystatechange = function(){
+            if(v_ajax.readyState==4 && v_ajax.status == 200){
+                alert("흥!");
+                document.querySelector("#id_disp").innerHTML = v_ajax.responseText;
+            }
+        }
+        v_ajax.send(v_formData); // post는 값을 넘길 때 send의 파라미터로 넘겨 줌
+    });
+    </script>
+</body>
+
+</html>

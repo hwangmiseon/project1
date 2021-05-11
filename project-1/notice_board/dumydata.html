@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+
+/* ***************************** 작성자 생성 ******************************* */
+//한국 성씨(복성포함), 나무위키 참조
+var v_korFamilyNames = "김,이,박,최,정,강,조,윤,장,임,한,오,서,신,권,황,안,송,전,홍,류,고,문,량,손," +
+                       "배,조,백,허,유,남,심,로,정,하,곽,성,차,주,우,구,신,임,전,민,유,류,나,진,지," + 
+                       "엄,채,원,천,방,공,강,현,함,변,염,양,변,여,추,노,도,소,신,석,선,설,마,길,주," + 
+                       "연,방,위,표,명,기,반,라,왕,금,옥,육,인,맹,제,모,장,탁,국,여,진,어,은,편," + 
+                       "남궁,독고,황보,제갈,사공,선우,서문,어금,망절,무본,황목,등정,장곡,강전";
+
+//이름에 자주 쓰이는 글자들 인터넷 참조
+var v_korNames = "성,영,상,재,종,정,동,용,승,경," +
+                 "호,수,석,철,훈,현,진,영,환,식," +
+                 "미,은,선,혜,지,덕,방,원,우,다," +
+                 "희,숙,자,순,주,솔,별,국,민,일," +
+                 "바,휴,왕,웅,범,대,익,중,낙,택," +
+                 "권,황,율,률,술,걸,탁,백,룡,건," +
+                 "애,난,소,분,아,매,말,녀,름,자," +
+                 "란,임,라,충,슬,준,옥,찬,림,례," +
+                 "필,규,한,예";
+
+v_korFamilyNames = v_korFamilyNames.split(",");
+v_korNames = v_korNames.split(",");
+
+function fmlyName() {
+    return v_korFamilyNames[Math.floor(Math.random()*v_korFamilyNames.length)];
+}
+
+function names(p_i) {
+    if(p_i % 30 == 0) {
+        return v_korNames[Math.floor(Math.random()*v_korNames.length)];
+    }
+    return v_korNames[Math.floor(Math.random()*v_korNames.length)] +
+            v_korNames[Math.floor(Math.random()*v_korNames.length)];
+}
+function f_ranName(p_i) {
+    return fmlyName() + names(p_i);
+}
+/* *************************************************************************** */
+
+
+/* ******************************* 구분 랜덤 선택 ***************************** */
+var v_gubun = {};
+v_gubun = ["info", "question", "buy", "sell"];
+localStorage.setItem("gubun", JSON.stringify(v_gubun));
+/* *************************************************************************** */
+
+
+/* ******************************** 제목 생성 ********************************* */
+
+/* var info = [1,2];
+info[2] = "3";
+localStorage.setItem("if", info);*/
+
+/* var info = {};
+info.kind = "샴 고양이의 종류와 성격";
+info.essen = "고양이를 위한 필수용품"; */
+// localStorage.setItem("info", JSON.stringify(info));
+
+/* var question = {};
+question.hair = "털빠짐이 많은데 해결할 방법이 있나요?";
+question.grit = "모래의 먼지때문에 힘들어요"; 
+question.feed = "사료는 어떤 영양성분이 들어있는게 좋은가요?";
+question.sleep = "고양이가 잠을 많이 자요"; */
+// localStorage.setItem("question", JSON.stringify(question));
+
+/* var sell = {};
+sell.wheel = "고양이 캣휠 중고 가져가실분"; */
+
+/* var buy = {};
+buy.toy = "고양이 장난감 삽니다"; */
+
+var info = [];
+info[0] = {kind : "샴 고양이의 종류와 성격"};
+info[1] = {essen : "노르웨이숲 활동량"};
+
+var question = [];
+question[0] = {hair : "털빠짐이 많은데 해결할 방법이 있나요?"};
+question[1] = {grit : "모래의 먼지때문에 힘들어요"}; 
+question[2] = {feed : "사료는 어떤 영양성분이 들어있는게 좋은가요?"}; 
+question[3] = {sleep : "고양이가 잠을 많이 자요"}; 
+
+var sell = [];
+sell[0] = {wheel : "고양이 캣휠 중고 가져가실분"};
+
+var buy = [];
+buy[0] = {toy : "고양이 장난감 삽니다"};
+
+/* v_gtitle.info = info;
+v_gtitle.question = question;
+v_gtitle.sell = sell;
+v_gtitle.buy = buy; */
+
+/* v_gtitle[0] = info;
+v_gtitle[1] = question;
+v_gtitle[2] = sell;
+v_gtitle[3] = buy; */
+
+var v_gtitle = [];
+v_gtitle[0] = {"info" : info};
+v_gtitle[1] = {"question" : question};
+v_gtitle[2] = {"sell" : sell};
+v_gtitle[3] = {"buy": buy};
+ 
+// var v_gtitle = [];
+// v_gtitle[0] = [{"gubun" : "info"}];
+// v_gtitle[1] = [{"gubun" : "question"}];
+// v_gtitle[2] = [{"gubun" : "sell"}];
+// v_gtitle[3] = [{"gubun" : "buy"}];
+
+var v_titleName = "noticeBT";
+localStorage.setItem(v_titleName, JSON.stringify(v_gtitle));
+
+var v_tstorage = JSON.parse(localStorage.getItem(v_titleName));
+// console.log(storage[0].info[1].essen);
+/* *************************************************************************** */
+
+
+/* ******************************** 내용 생성 ********************************* */
+
+var ct_info = [];
+ct_info[0] = {"kind" : "그나마 키우기 쉬운 냥이, 애교냥이를 찾는다면 샴이 제격입니다. 단점은 굉장한 수다쟁이라는거..!" +
+"어릴때는 시도 때도 없이 울어서 너무 힘들었어요. 사이렌 틀어놓은 느낌이랄까 ㅎㅎ" +
+"그리고 얼마나 애교쟁이냐 하신다면 강아지랑 동급이랄까요? 집사에게 붙어있는걸 너무 좋아하고" +
+"쓰다듬 받는것도 너무 좋아해요"};
+ct_info[1] = {"essen" : "고양이 목욕 필수용품으로 있어야 하는건 펫드라이기에요! 털을 제대로 말려야 피부병이 안생기거든요."};
+ct_info[2] = {"essen" : "반려묘 체구와 습관에 따라서 고양이 화장실을 선택해야 해요."};
+
+var ct_question = [];
+ct_question[0] = {"sleep" : "성장기의 아기고양이는 하루의 70~80%의 자요~" }; 
+ct_question[1] = {"sleep" : "고양이가 어릴때 많이 자고 노령묘일때도 길게 자요"};
+ct_question[2] = {"sleep" : "자는 시간이 많아져도 식욕도 있으면 크게 걱정하지 않아도 괜찮아요"};
+ct_question[3] = {"sleep" : "자는 시간이 긴 고양이지만 수면의 깊이는 사실 꽤 얕습니다. 고양이의 잠은 우리 표현으로 숙면이라기 보다 '선잠'이라는 표현이 가까울거에요" +
+" 이렇게 깊게 자지 못하는 한편, 체력도 보충 해야하기 때문에 자는 시간이 길어집니다"};
+ct_question[4] = {"sleep" : "보통 12~16시간이 고양이의 수면시간입니다. 대부분 얕은 잠을 자는 고양이지만, 보호자의 기척과" +
+" 소리에 반응이 없이 깊은 잠만 계속 자고 있는 경우, 특히 한자리에서 자세가 변하지 않고 오랫동안 자고 있는 경우는" +
+" 주의 필요합니다!"};
+ct_question[5] = {"hair" : "1년에 두번, 털갈이 시기이면 털이 더 많이 빠져요"};
+ct_question[6] = {"hair" : "털 날림을 완화하기 위해 주기적으로 빗질을 해주는게 좋아요"};
+ct_question[7] = {"hair" : "목욕을 하면 자연스럽게 죽은 털을 제거할 수 있어요"};  
+ct_question[8] = {"hair" : "털이 과하게 빠지고, 빈 부분이 생긴다면 고양이 건강에 문제가 생길수도 있으니 검사 받아보세요"};
+ct_question[9] = {"grit" : "고양이들은 깔끔한지라 화장실이 조금만 불편하거나 더러워도 스트레스받는다죵" + 
+"반려묘도 집사도 모두가 만족하는 고양이모래 두부모래가 딱 좋아요."};
+ct_question[10] = {"feed" : "건식은 로얄캐닌 라이트 웨이트케어를 습식은 울트라 라이트 케어 파우치 그레이비로 먹이고 있어요~"};
+
+var ct_sell = [];
+ct_sell[0] = {"wheel" : "울집 냥이한테 캣휠 사줬는데 첫날에만 몇번 타보고 한달이 넘도록 사용하지를 않네요ㅜ " +
+"필요하신분께 저렴하게 판매합니다.배송비 포함 30만원에 샀는데 25만에 드려요"};
+
+var ct_buy = [];
+ct_buy[0] ={"toy" : "러봉펫 고양이 낚시대 깃털 장난감 롱낚시대 낚싯대 리필 강아지풀 오뎅꼬치 카샤카샤 붕붕"};
+ct_buy[1] ={"toy" : "푸드트리 먹이퍼즐 만원에 삽니다~"};
+
+var v_content = [];
+v_content[0] = {"ct_info" : ct_info};
+v_content[1] = {"ct_question" : ct_question};
+v_content[2] = {"ct_sell" : ct_sell};
+v_content[3] = {"ct_buy" : ct_buy};
+
+var v_contName = "noticeBC";
+localStorage.setItem(v_contName, JSON.stringify(v_content));
+var v_cstorage = JSON.parse(localStorage.getItem(v_titleName));
+
+
+/* *************************************************************************** */
+
+/* localStroage에 더미 데이터 생성  */
+var v_tblName = "noticeBoard";
+/* 전체 json 을 담을 빈 배열 생성 */
+var v_datas = [];
+var v_dataLength = 100;
+var v_gubun = ["op_info", "op_ques", "op_buy", "op_sell"];
+for(var i = 1; i <= v_dataLength; i++) {
+    /* 1개 글 객체 생성 */
+    var v_geul = {};
+    v_geul.prino = i;
+    /* 옵션 4개중에 1개 랜덤으로 선택 */
+    v_geul.clas = v_gubun[Math.floor(Math.random()*v_gubun.length)];
+    v_geul.writer = f_ranName(i);
+    // v_geul.title = f_rantitle(i);
+    v_geul.cont = "";
+}
+
+function fmlyName() {
+    return v_korFamilyNames[Math.floor(Math.random()*v_korFamilyNames.length)];
+}
+function names(p_no) {
+    if(p_no % 30 == 0) {
+        return v_korNames[Math.floor(Math.random()*v_korNames.length)];
+    }
+    return v_korNames[Math.floor(Math.random()*v_korNames.length)] +
+           v_korNames[Math.floor(Math.random()*v_korNames.length)];
+}
+
+function f_ranName(p_no) {
+    return fmlyName() + names(p_no);
+}
+
+/* 랜덤 선택된 select 값에 따라서 제목이 랜덤하게 생성 */
+// function f_rantitle(p_gubun) {
+//     return v_tstorage[Math.floor(Math.random()*v_tstorage.length)];
+//     // return storage[p_gubun][Math.floor(Math.random()*storage.length)];
+// }
+
+// console.log(storage[0].info[1].essen);
+
+// console.log(v_storage[Math.floor(Math.random()*v_storage.length)].info[Math.floor(Math.random()*v_storage.info.length)]);
+
+// console.log(v_tstorage.gubun);
+
+
+
+
+
+
+
+
+// console.log(storage[Math.floor(Math.random()*storage.length)]);
+/* 
+console.log(storage[0].info[0].kind);
+var text = "storage[0].info[0].kind";
+text = text.split(".");
+console.log(text[text.length-1])
+
+console.log(storage[0].info[1].essen);
+console.log(storage[1].question[0].hair);
+console.log(storage[1].question[1].grit);
+console.log(storage[1].question[2].feed);
+console.log(storage[1].question[3].sleep);
+console.log(storage[2].sell[0].wheel);
+console.log(storage[3].buy[0].toy); */
+</script>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    /* ------------------------jQuery의 이해------------------------ */
+    // 함수 호출법 -> 함수이름(), new 함수이름() -> new 가 붙으면 function 키워드가 자바의 class처럼 동작
+    // new 가 붙었을 경우의 함수를 constructor(생성자)라고 부름
+
+    // function aaa() {    // 함수안에 넣어주면 mydom은 지역변수가 되어 영향을 안받음
+
+    (function () {    // 즉각 실행함수
+        var $ = function (p_sel) {    // new 없애기
+            return new mydom(p_sel); // 선택자이므로, 매개변수가 있어야 함
+        }
+        
+        var mydom = function (p_sel) {
+            // 실제 jQuery는 querySelectorAll 메소드가 없을 때 만들어져서 이 부분이 아주 복잡
+
+            var v_elems = document.querySelectorAll(p_sel);
+            /* ------최초 값들을 저장 (최초 선택된 객체들로 돌아가고파 end 메소드)----- */
+            // this.preSel = p_sel;
+            /* -------------------------------------------------------------------- */
+            console.log(this);
+            this.length = v_elems.length;
+            for (var i = 0; i < v_elems.length; i++) {
+                this[i] = v_elems[i];   // this는 새로 생성되는 객체를 가리킴
+            }
+            return this;    // 이것이 있는 거나 마찬가지, 명시적으로 적었음
+        }
+        window.$ = $;   // 참조방식(함수)
+        // 지역함수 $를 밖에서 접근할 수 있게 전역 변수 $로 참조
+        $.fn = mydom.prototype;
+        // mydom에 메소드 추가로 밖에서 할 수 있도록 전역변수 $.fn으로 참조
+    })();
+
+    // 기본타입 숫자 문자열, 문자열에 메소드나 속성을 붙이면 객체로 자동 변환
+    $("dd");
+    
+
+    
+
+</script>

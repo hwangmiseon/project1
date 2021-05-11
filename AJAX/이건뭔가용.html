@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    // 그동안 우리의 객체 만들던 방식
+    var v_obj = {
+        // name: "cat",
+        // getName: function() {
+        //     alert(this.name);
+        // }
+    };
+    /*
+    v_obj.name = "cat";
+    v_obj.getName = function() {
+        alert(this.name);
+    }
+    
+    v_obj.getName();
+*/
+
+    // 자바의 class 개념으로 만든 객체가 없었음, class 키워드가 있음(es6버전부터)
+    // es5 버전까지는 function 키워드가 class 키워드 역할도 같이 함
+    
+    var o_saram = function(p_name, p_age) {
+        this.name = p_name;
+        this.age = p_age;
+        /*
+        this.getName = function() {
+            return this.name;
+        }
+        this.setName = function(p_ag) {
+            this.age = p_ag;
+        }
+        */
+    }
+    // 역시 메모리 절약 절체절명을 위해서 나왔음, prototype 속성
+    // o_saram 을 공유하여 사용
+    o_saram.prototype.getName = function() {
+        return this.name;
+    }
+    o_saram.prototype.getAge = function() {
+        return this.age;
+    }
+
+    // function call 하는 방법에 의존
+    // o_saram();
+
+    // 함수앞에 new 를 붙이면 java의 클리스처럼 동작
+    /*
+    var v_sjh = new o_saram("송지효", 20);
+    var v_hg = new o_saram("허각", 30);
+    console.log(v_sjh);
+    console.log(v_hg);
+*/
+    // alert(v_sjh.getName());
+    // v_sjh.setName("50");
+    // alert(v_sjh.age);
+
+    // 함수와 클래스를 구분하는 방법 -> 클래스 : this 가 많이 있음, 함수 : 메소드 형식, return 
+/*********************************************************************************/
+
+/* proto 상속개념 , 하나만 가지고 있고 공용으로 사용 */
+    var v_sjh = new o_saram("송지효", 20);
+    var v_hg = new o_saram("허각", 30);
+    console.log(v_sjh); // 메소드 속성이 사라짐, 숨겨져 있음
+    console.log(v_hg);
+
+    alert(v_sjh.getName());
+    // v_sjh.setName("50");
+    alert(v_sjh.age);
+
+</script>

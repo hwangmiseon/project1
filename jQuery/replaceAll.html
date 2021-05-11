@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    // console.log(String.prototype);
+    // 객체가 가진 메소드 덮어쓰기
+    // built-in 메소드를 덮어쓰는 것은 아주 잘 써야 하고, 정보를 잘 공유해야 함
+    
+    if(!String.prototype.replaceAll) {  // replaceAll 이 지원안되는 브라우져라면 추가
+        String.prototype.replaceAll = function(p_char, p_rep) { // polyfill (매꿈이)
+            // alert(this.valueOf());
+            var v_sibStr = this.valueOf();
+            while(v_sibStr.indexOf(p_char) != -1) {
+                // 새로운 값을 return 값으로 덮어써줘야 함.
+                v_sibStr = v_sibStr.replace(p_char, p_rep);
+            }
+            return v_sibStr;
+        }
+    }
+
+    var v_str = "페르시안 페르 시안 노르웨이숲";
+    v_str = v_str.replaceAll("페르", "야르");
+    console.log(v_str);
+</script>

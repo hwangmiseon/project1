@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- 사용자 정의 속성 data-원하는 속성명 -->
+    <div id="id_dv" data-blue="블루" data-sian="시안" data-blue-age="6">러시안블루</div>
+    <input type=button value="누름" onclick="f_ck()">
+
+    <div class="parent3">
+        <div class="parent2">
+            <div class="me parent">노르웨이숲</div>
+        </div>
+        <div>
+            자손2
+        </div>
+    </div>
+
+    <!-- ---------------------------------- -->
+    <input type=text value="샴"><br>
+    <input type=text value="스핑크스"><br>
+    <input type=text value="페르시안"><br>
+    <input type=button value="누름"><br>
+    <input type=button value="누름2"><br>
+    <input type=button value="누름5"><br>
+
+    <!-- ---------------------------------- -->
+
+    <div id="id_per" style="height: 300px;border: 1px solid hotpink;min-height: 20px;">페르시안</div>
+    <input type=button value="시앙" id="id_btn">
+
+
+    <script>
+        /* var v_dv = document.querySelector("#id_dv");
+        function f_ck() {
+            // dataset : 사용자 정의 속성명을 읽는 속성
+            console.log(v_dv.dataset.sian);
+            console.log(v_dv.dataset["blue"]="블루레이");
+            console.log(v_dv.dataset.blueAge);  
+        } */
+
+        // dataset과 비슷하나, 빈 객체를 별도로 생성해서 값을 담아둠
+        /* console.log($("#id_dv").data());    // 설정된 값 읽어옴
+        $("#id_dv").data("sian", "시온");   // 태그에 직접 변경 내용을 반영하지 않음
+        alert($("#id_dv").data("sian"));   // 별로 관리되기 때문에 사용에 문제 없음 */
+
+        // closest 가장 가까운 걸 찾아냄, 부모 방향으로
+        // 많이 착각하는 것이 자기 자신자신으로 찾기 시작한다는 것
+        /* alert($(".me").closest(".parent").html()); */
+
+
+        /* $("div").first();  // $("div").eq(0)
+        $("div").last();    // $("div").eq($("div").length-1) */
+
+        // $("input:text").add("input:button").css("backgroundColor", "red");
+
+
+     /* console.log($("input").is(":button"));
+        console.log($("input:text").is(":button")); */
+
+
+        // alert($(".me").parent().html());
+        // console.log($(".parent3").children());
+
+       /*  $(".me").empty();
+        document.querySelector(".me").innerHTML = ""; */
+
+
+        $("#id_btn").on("click", function() {
+          /*  $("#id_per").fadeToggle(2000, function() {   // 끝나고 2초뒤에 실행
+                alert("사라짐");
+           }); */
+           /*  $("#id_per").fadeOut(10000, function(){
+                console.log("페이드아웃 끝남");
+            }).fadeIn(10000, function() {
+                console.log("페이드인");
+            }) //default 400, 투명도 조절 */
+
+            /* $("#id_per").slideUp(1000)
+                        .slideDown(2000); */
+
+            $("#id_per").slideToggle(2000);
+
+        }); 
+
+    </script>
+
+</body>
+</html>

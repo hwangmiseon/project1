@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>김주헌</div>
+    <div class="sil">사승원</div>
+    <div>정찬웅</div>
+    <div class="sil">황미선</div>
+    <script>
+       //var aaa = "오성현"; 
+       // window.aaa = "오성현";
+       // alert(aaa);
+
+
+        // jQuery Core 부분을 맹글었어용 ㅋㅋ
+        (function (){
+            var $ = function (p_ssel){
+                return new Mydom(p_ssel);  // factory 패턴 객체를 마구 마구 찍어냄
+            }
+            var Mydom = function(p_sel){
+                var v_eles = document.querySelectorAll(p_sel);
+                this.length = v_eles.length;
+                for(var i=0; i< v_eles.length; i++){
+                    this[i] = v_eles[i]
+                }
+                return this;  // 명시적으로 이걸 써도 상관 없음
+            };   
+            window.$ = $;              //함수 밖에서도 $를 쓰기 위함
+            $.fn = Mydom.prototype;     //
+        })();
+
+        // 메소드 추가는?
+        // Mydom.prototype.html= function(p_val){
+        //
+        // }
+        /*    
+        $.fn.html = function(p_val){
+            for(var i =0; i < this.length; i++){
+                this[i].innerHTML=p_val;
+            }
+        }
+        */
+        // 메소드 추가
+        /*
+       $.fn.html = function(f_callback){
+          // console.log(this);
+           for(var i=0; i< this.length; i++){
+               f_callback.call(this[i],i,this[i].innerHTML)
+           }
+       } 
+       */
+      /*
+       $.fn.html = function(f_callback){
+           for(var i=0; i< this.length; i++){
+               this[i].innerHTML=f_callback(i,this[i].innerHTML)
+           }
+       } 
+       */
+       /*
+       $.fn.html = function(){
+               return this[0].innerHTML;
+       } 
+       */
+//       var v_aaa = function(){
+//
+//       }
+//       alert(typeof v_aaa); 
+       $.fn.html = function(p_arg){
+            if(!p_arg){
+                return this[0].innerHTML;
+            }else if(typeof(p_arg) == "string"){
+                for(var i =0; i < this.length; i++){
+                    this[i].innerHTML=p_arg;
+                }
+            }else if(typeof(p_arg) == "function"){
+                for(var i=0; i< this.length; i++){
+                    this[i].innerHTML = p_arg(i,this[i].innerHTML)
+                }
+                return this;
+            }else {
+                alert("저리 강 나도 몰랑 화가 나넹, 문서 좀 보고 왕");
+            }
+       }
+   
+       alert($("div").html());
+
+       $("div").html(function(p_inx,p_val){
+           if(p_inx==0){
+               return "<h1>김주헌 미웡</h1>";
+           }
+           return p_val;
+       }).html(function(p_inx,p_val){
+           if(p_inx==3){
+               return "<h1>윤가영 만만셍</h1>";
+           }
+           return p_val;
+       }).html(function(p_inx,p_val){
+           if(p_val=="정찬웅"){
+               return "<h1>찬웅이도 가영이를 좋아행</h1>";
+           }
+           return p_val;
+       });                          // 메소드 체인닝(method chaining)
+       
+      // $(".sil").html("<h1>역시 윤가영이 최고얌</h1>");
+
+       //    alert($("div").html()); //?
+
+
+       //호출
+       /*
+       $(".sil").html(function(p_inx, p_str){
+                //alert(p_inx + "   " + p_str);
+            if(p_str == "사승원"){
+                return "<h1>사승원이 이해되었나?</h1>";
+            }
+            return p_str;   // 원래 꺼 리턴
+       });
+       */
+
+      //  $(".sil").html("<h1>대장님 만만세엥</h1>");
+
+    </script>    
+</body>
+</html>

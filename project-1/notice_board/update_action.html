@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/jsp.js"></script>
+</head>
+<body>
+    <script>
+        // 사용자 값 받아오기
+        var v_prino = request.getParameter("nm_munje");
+        var v_clas = request.getParameter("nm_clas");
+        var v_writer = request.getParameter("nm_writer");
+        var v_title = request.getParameter("nm_title");
+        var v_cont = request.getParameter("nm_cont");
+
+        // 테이블명 지정
+        var v_tbTitle = "noticeBoard";
+ 
+        // 수정해야 할 글만 찾기(for로 돌리고 if로 키값 같은거 찾기) -> 새로운 글로 저장
+        v_tbData = JSON.parse(localStorage.getItem(v_tbTitle));
+        for(var i = 0; i < v_tbData.length; i++) {
+            if(v_tbData[i].prino == v_prino) {
+                v_tbData[i].title = v_title;
+                v_tbData[i].clas = v_clas;
+                v_tbData[i].cont = v_cont;
+                v_tbData[i].date = (new Date().toLocaleDateString());
+                break;
+            }
+        }
+
+        // 업데이트된 배열로 localStorage 다시 쓰기
+        localStorage.setItem(v_tbTitle, JSON.stringify(v_tbData));
+        alert("글이 잘 수정되었습니다.");
+        window.opener.document.location.href=window.opener.document.URL;
+        window.close();       
+    </script>
+</body>
+</html>

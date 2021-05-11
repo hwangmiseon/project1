@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="id_disp"></div>
+    <input type=submit id="id_sub">
+
+<script>
+   var v_btn = document.querySelector("#id_sub");
+    v_btn.addEventListener("click",function(){
+
+        //cross 오리진 문제를 해결하는 서버 우회기법이라고 부름
+        // 내 서버가 필요한 페이지를 먼저 불러서 읽은 다음에 그 내용을 돌려줌
+        /*
+            1. 아작스 되는 지 확인?
+            2. 1번이 크로스 오리진 문제로 안될 경우 우회기법 사용
+        */
+        var v_ajax = new XMLHttpRequest();
+        v_ajax.open("post","wpost.php",true); 
+        v_ajax.onreadystatechange = function(){
+            if(v_ajax.readyState==4 && v_ajax.status == 200){
+                alert("흥!");
+                document.querySelector("#id_disp").innerHTML = "<h1>"+ v_ajax.responseText + "</h1>";
+            }
+        }
+        v_ajax.send(); 
+    });
+    </script>
+</body>
+
+</html>

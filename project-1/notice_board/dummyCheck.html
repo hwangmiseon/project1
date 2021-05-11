@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script src="../../js/jsp.js"></script>
+<script>
+    var v_data = {};  // 미선이가 만들고 싶은 데이타
+    v_data.cat = ["고양이1","고양이2","고양이3"];
+    v_data.dog = ["강아지","강냉이2","강깡3"];
+    v_data.snake = ["아시아뱀","유럽뱀","미국뱀"];
+
+    var v_userSel = request.getParameter("animal"); 
+    console.log(v_data[v_userSel][Math.floor(Math.random()*3)]);
+</script>

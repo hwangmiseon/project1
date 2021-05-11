@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/ag-grid-enterprise/dist/ag-grid-enterprise.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-enterprise/dist/styles/ag-theme-alpine.css">
+    <script src="js/map.js"></script>
+    <title>Document</title>
+    <style>
+        /* *{  margin: 0; } */
+        #id_disp {
+            margin-left: 0;
+            margin-top: 0;
+        }
+
+        #id_title {
+            border: 1px solid khaki;
+            width: 100vw;
+            height: 100px;
+            background-color: khaki;
+        }
+
+        #id_body_top {
+            border: 1px solid lightsalmon;
+            width: 100vw;
+            height: 50px;
+            font-size: 2em;
+            /* background-color: lightsalmon; */
+        }
+        #id_map {
+            display: inline;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <div id="id_disp">
+        <!-- <div id="id_title"></div>    -->
+        <div id="id_body_top">
+            주변에 있는 명소 소개
+            <!-- <input type="button" value="가입하기" onclick="f_memJoin()"> -->
+        </div>
+    </div> 
+    
+    <div id="myGrid" style="height: 400px; width:800px;" class="ag-theme-alpine"></div>
+    <input type=button value="csv수출" onclick="f_exp()">
+    
+    <div>
+        <label for="">주소 찾기</label>
+        <input type="text" name="" id="id_addrfind" value="">
+        <input type="button" value="검색" onclick="f_find()">
+    </div>
+    
+    
+    <div id="map" style="width:500px;height:400px;"></div>
+
+    <div id="id_input">
+        <form action="contentWrite.html">
+        <table border="1px">
+            <tr>
+                <td>위치</td>
+                <td><input id="addr" name="nm_addr" type="text" value=""></td>
+            </tr>
+            <tr>
+                <td colspan="2"><textarea name="nm_cont" id="cont" cols="30" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="저장"><input type="button" value="삭제" onclick="f_delete()"></td>
+            </tr>
+        </table>
+    </form>
+    </div>
+
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=90b3cc4b424e3c83aecd0e2084ad153b&libraries=services"></script>
+    <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = {
+                center: new kakao.maps.LatLng(36.3267842155492, 127.407836053487), // 지도의 중심좌표
+                level: 1 // 지도의 확대 레벨
+            };
+        
+
+        // 지도를 생성합니다    
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
+            infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+
+        // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+        searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+
+        // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+        kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+            searchDetailAddrFromCoords(mouseEvent.latLng, function (result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                    detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+
+                    var road_address = result[0].road_address.address_name;
+                    var address = result[0].address.address_name;
+
+                    var content = '<div class="bAddr">' +
+                        '<span class="title">법정동 주소정보</span>' +
+                        detailAddr +
+                        '</div>';
+
+                    // 마커를 클릭한 위치에 표시합니다 
+                    marker.setPosition(mouseEvent.latLng);
+                    marker.setMap(map);
+
+                    // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+                    infowindow.setContent(content);
+                    infowindow.open(map, marker);
+
+                    /* 주소 가져오기 */
+                    $("#addr").attr("value", address);
+                   
+                }
+            });
+        });
+
+        function f_find() {    
+            // 주소로 좌표를 검색합니다
+            geocoder.addressSearch($("#id_addrfind").val(), function(result, status) {
+            
+                // 정상적으로 검색이 완료됐으면 
+                if (status === kakao.maps.services.Status.OK) {
+            
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+            
+                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content: '<div style="width:150px;text-align:center;padding:6px 0;"></div>'
+                    });
+                    infowindow.open(map, marker);
+            
+                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                    map.setCenter(coords);
+                } 
+
+                        // 영역의 남서쪽 좌표를 얻어옵니다 
+                var swLatLng = bounds.getSouthWest(); 
+                
+                // 영역의 북동쪽 좌표를 얻어옵니다 
+                var neLatLng = bounds.getNorthEast(); 
+  
+                console.log(swLatLng + "   " + neLatLng);
+        });
+
+
+        // function getInfo() {
+        // // 지도의 현재 중심좌표를 얻어옵니다 
+        // var center = map.getCenter(); 
+        
+        // // 지도의 현재 레벨을 얻어옵니다
+        // var level = map.getLevel();
+        
+        // // 지도타입을 얻어옵니다
+        // var mapTypeId = map.getMapTypeId(); 
+        
+        // // 지도의 현재 영역을 얻어옵니다 
+        var bounds = map.getBounds();
+        
+        // 영역의 남서쪽 좌표를 얻어옵니다 
+        var swLatLng = bounds.getSouthWest(); 
+        
+        // 영역의 북동쪽 좌표를 얻어옵니다 
+        var neLatLng = bounds.getNorthEast(); 
+        
+        // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
+        // var boundsStr = bounds.toString();
+        console.log(swLatLng + "   " + neLatLng);
+        
+        // var message = '지도 중심좌표는 위도 ' + center.getLat() + ', <br>';
+        // message += '경도 ' + center.getLng() + ' 이고 <br>';
+        // message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
+        // message += '지도 타입은 ' + mapTypeId + ' 이고 <br> ';
+        // message += '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
+        // message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
+        // */
+       
+    }
+
+
+
+        // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+        kakao.maps.event.addListener(map, 'idle', function () {
+            searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+        });
+
+        function searchAddrFromCoords(coords, callback) {
+            // 좌표로 행정동 주소 정보를 요청합니다
+            geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
+        }
+
+        function searchDetailAddrFromCoords(coords, callback) {
+            // 좌표로 법정동 상세 주소 정보를 요청합니다
+            geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+        }
+
+        // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
+        function displayCenterInfo(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                var infoDiv = document.getElementById('centerAddr');
+
+                for (var i = 0; i < result.length; i++) {
+                    // 행정동의 region_type 값은 'H' 이므로
+                    if (result[i].region_type === 'H') {
+                        infoDiv.innerHTML = result[i].address_name;
+                        break;
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        /*************************** 리스트 ***************************/
+        var rowSelect;
+        var gridOpt;
+        function f_exp() {
+            var v_params = {
+                suppressQuotes: "true",   // none, true
+                columnSeparator: "\t",   // none, tab, |
+                customHeader: "정보",  // 헤더명 추가 출력
+                customFooter: "contents"    // 데이타 아래에 footer추가
+            }
+            gridOpt.api.exportDataAsCsv(v_params);
+        }
+        
+        var gridDiv = document.querySelector('#myGrid'); // 한번만 접근
+        document.addEventListener('DOMContentLoaded', function(){
+
+        var v_tbTitle = "contents";
+        var v_arrData = JSON.parse(localStorage.getItem(v_tbTitle));
+            
+        var colDef = []; /*{ field: "별명" }*/
+        for(var v_colName in v_arrData[0]){
+            var v_col = {};
+            v_col.field = v_colName;
+            colDef.push(v_col);
+        }    
+        console.log(colDef); // 만든거 확인
+
+        // rowData 가져온것과 형식이 일치 할게 없음 
+        console.log(v_arrData);
+        var rowData = v_arrData;
+
+        // 그리드 옵션 설정 
+        gridOpt = {
+                columnDefs: colDef,
+                rowData:rowData,
+                pagination:true,
+                paginationAutoPageSize:true,
+                onRowClicked : function(event){
+                        console.log(event.data);
+                        $("#addr").val(event.data.addr);
+                        $("#cont").val(event.data.cont);
+                        rowSelect = event.data.prino;
+                        console.log(rowSelect);
+                }
+            }
+
+        // 필요한 거 다 준비했으니 그리드 생성                
+        new agGrid.Grid(gridDiv, gridOpt);
+
+    });
+
+    function f_delete() {
+        var v_arrData = JSON.parse(localStorage.getItem("contents"));
+        console.log(rowSelect);
+        v_arrData.splice(rowSelect-1, 1);
+        localStorage.setItem("contents", JSON.stringify(v_arrData));
+        location.reload();
+    }
+    
+
+/**************************************************************************/
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'doughnut',
+        data: {
+            labels: ['seoul', 'Daegeon', 'Busan'],
+            datasets: [{
+                label: '# of Votes',
+                data: [],
+                backgroundColor: [
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 159, 255, 0.2)',
+                    'rgba(255, 34, 56, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 23, 255, 1)',
+                    'rgba(255, 34, 56, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    
+            
+        var v_arrData = JSON.parse(localStorage.getItem("contents"));
+        var v_Daegeonnum = 0;
+
+        for(var i=0; i<v_arrData.length; i++){
+            if(v_arrData[i].addr.substr(0, 2) == "대전"){
+                v_Daegeonnum++;
+            }
+        }
+        var v_Seoulnum = 0;
+        for(var i=0; i<v_arrData.length; i++){
+            if(v_arrData[i].addr.substr(0, 2) == "서울"){
+                v_Seoulnum++;
+            }
+        }
+
+        var v_Busannum = 0;
+        for(var i=0; i<v_arrData.length; i++){
+            if(v_arrData[i].addr.substr(0, 2) == "부산"){
+                v_Busannum++;
+            }
+        }
+        myChart.data.datasets[0].data.push(v_Seoulnum);
+        myChart.data.datasets[0].data.push(v_Daegeonnum);
+        myChart.data.datasets[0].data.push(v_Busannum);
+        myChart.update();
+        
+    
+    </script>
+
+</body>
+
+</html>

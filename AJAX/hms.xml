@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<animal>
+    <dog>
+        <name>치즈</name>
+        <age>5</age>
+    </dog>
+    <dog>
+        <name>삼색이</name>
+        <age>3</age>
+    </dog>
+    <dog>
+        <name>고등어</name>
+        <age>2</age>
+    </dog>
+</animal>

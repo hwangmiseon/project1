@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script src="../../js/jsp.js"></script>
+<script>
+    // 키값을 가져옴
+    var v_geulID = request.getParameter("pri_id");
+    var v_tbTitle = "noticeBoard";
+
+    // 키값을 가지고 localStorage에서 해당 글 내용 삭제
+    var v_geulDatas = JSON.parse(localStorage.getItem(v_tbTitle));
+    for(var i = 0; i < v_geulDatas.length; i++) {
+        if(v_geulDatas[i].prino == v_geulID) {
+            v_geulDatas.splice(i, 1);
+            break;
+        }
+    }
+
+    // 저장
+    localStorage.setItem(v_tbTitle, JSON.stringify(v_geulDatas));
+    opener.location.replace('list.html');
+    // window.opener.document.location.href=window.opener.document.URL;
+    window.close();
+</script>

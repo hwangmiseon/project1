@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script src="./js/jsp.js"></script>
+
+<script>
+    // 사용자 값 받아오기
+    var v_addr = request.getParameter("nm_addr");
+    var v_cont = request.getParameter("nm_cont");
+    // 테이블명 지정
+    var v_tbTitle = "contents";
+    // 글 객체를 담을 빈 배열
+    var v_tbData = [];
+    var v_prino = 1;
+ 
+    if(localStorage.getItem(v_tbTitle)) {
+        v_tbData = JSON.parse(localStorage.getItem(v_tbTitle));
+        /*  prino((전체 길이) 2-1)값 +1 */
+        v_prino = v_tbData[v_tbData.length-1].prino + 1;
+    }    
+    
+    // 넘어온 값들을 객체 1개로 묶어줌
+    var v_geul = {};
+    v_geul.prino = v_prino; // primary키의 역할
+    v_geul.addr = v_addr;
+    v_geul.cont = v_cont;
+    v_geul.date = (new Date()).toLocaleDateString();
+    // 묶어준 객체를 배열에 저장
+    v_tbData.push(v_geul);    
+
+    // 배열을 localStorage에 저장
+    localStorage.setItem(v_tbTitle, JSON.stringify(v_tbData));
+ 
+    alert("글이 저장되었습니다.")
+    // 리스트(목록) 페이지로 넘어감
+    location.href = "start.html";
+    
+</script>

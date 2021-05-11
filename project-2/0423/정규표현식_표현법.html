@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // var v_regExp1 = new RegExp("roze");  // 표현법 1
+        var v_regExp2 = /roze/;                 // 표현법 2
+        // var v_str = "hura roze man roze man roze roze se";     // test, replace
+        // var v_str = "hura roZe man rozE man rOze Roze se";     // test, replace
+        var v_str = "hura roZe man rozA man rOzG RozZ se";     // test, replace
+        alert(v_regExp2.test(v_str));           // 변수안에 roze라는 단어가 있는지 확인
+        // alert(v_str.replace(/roze/, "한석규")); // roze를 한석규로 바꿈
+        // alert(v_str.replace(/roze/gi, "한석규")); // g(gloval) 전체 바꿈, i(ignore) 대소문자 무시
+        alert(v_str.replace(/roz./gi, "한석규")); // g(gloval) 전체 바꿈, i(ignore) 대소문자 무시
+        
+
+        var v_regExp2 = /(roze)(manse)/gi;                 // 표현법 2
+        var v_str = "hura roZemanse rozEmanse rOzG RozZ se";     // test, replace
+        // alert(v_str.replace(v_regExp2, "$1헤헤헤$2")); // ()() / 첫번째 괄호 $1,두번째 괄호 $2
+
+
+    </script>
+</body>
+</html>

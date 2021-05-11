@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./../ckeditor4/ckeditor.js"></script>
+    <script src="./../js/jsp.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <h1 align=center>게시판 글 읽기</h1>
+    <hr style="width:100%;height:3px;border:none;background-color: lightgray;">
+    
+    <!-- 글분류(정보, 문의, 삽니다, 팝니다), 작성자, 제목, 내용(edit), 날짜(자동), 조회수 -->
+    <!-- form 태그안의 input 박스의 name값과 value값을 get으로 ?name=value&name2=value2 형식으로 주소창으로 보내줌!!!!! -->
+    <form action="update_action.html">
+        <table align=center >
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;글분류</td>
+                <td>
+                    <select class="form-select-lg" aria-label=".form-select-lg" name="nm_clas" id="id_clas">
+                    <option value="clas">선택하세요</option>
+                    <option value="op_info">정보</option>
+                    <option value="op_ques">문의</option>
+                    <option value="op_buy">삽니다</option>
+                    <option value="op_sell">팝니다</option>                    
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height:3px;" ><hr style="height:1px; border:none; background-color: lightgray;" ></td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자</td>
+                <td>
+                    <input type=text id="id_writer" name="nm_writer" value="" style="width:200px; border-top: lime; border-left: lime; border-right: lime; border-color:lightgray;" autocomplete=off required disabled>
+                    <input type="text" id="id_munje" name="nm_munje" value="">
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="2" style="height:3px;" ><hr style="height:1px; border:none; background-color: lightgray;" ></td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목</td>
+                <td><input type=text id="id_title" name="nm_title" value="" style="width:200px; border-top: lime; border-left: lime; border-right: lime; border-color:lightgray;" autocomplete=off required ></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height:3px;" ><hr style="height:1px; border:none; background-color: lightgray;" ></td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내용</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height:3px;" ><hr style="height:1px; border:none; background-color: lightgray;" ></td>
+            </tr>
+            <tr>
+                <td colspan="2"><textarea id="id_cont" name="nm_cont"></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td align="right">
+                    <input type="reset" class="btn btn-outline-secondary" value="다시쓰기" onclick="f_reset()">
+                    <input type="submit" class="btn btn-outline-secondary" value="저장" onclick="f_save()">
+                    <input type=button class="btn btn-outline-secondary" id="id_delbn" value="삭제" onclick="f_del()">
+                    <input type=button class="btn btn-outline-secondary" value="취소" onclick="f_cancel()">
+                </td>
+            </tr>
+        </table>
+
+    </form>
+
+    <script>
+        /* localStorage의 noticeBoard의 정보를 가져옴 */
+        var v_tbTitle = "noticeBoard";
+        var v_geulDatas = JSON.parse(localStorage.getItem(v_tbTitle));
+        // alert(localStorage.getItem(v_tbTitle)); // 글 갯수만큼 저장
+
+        /* get으로 넘어온(선택한) 키값을 가져옴 */
+        var pri_id = request.getParameter("pri_id");
+        document.getElementById("id_munje").value = pri_id;
+        
+        var v_geul;
+        for(var i = 0; i < v_geulDatas.length; i++) {
+            if(v_geulDatas[i].prino == pri_id) {
+                v_geul = v_geulDatas[i];
+                break;
+            }
+        }
+        
+        document.getElementById("id_clas").value = v_geul.clas;
+        document.getElementById("id_writer").value = v_geul.writer;
+        document.getElementById("id_title").value = v_geul.title;
+        document.getElementById("id_cont").value = v_geul.cont;
+        
+        // alert(request.getParameter("pri_id")); // 선택한 글의 id값 가져옴
+        
+        CKEDITOR.replace( 'nm_cont', {
+            height: 300
+        });
+        
+        // CKEDITOR 값 지우기
+        function f_reset() {
+            CKEDITOR.instances.nm_cont.setData("");
+        }
+        
+        var v_delbn = document.getElementById("id_delbn");
+        // id값을 보내서 삭제
+        function f_del() {
+            // button태그에서 a태그처럼 href 설정하여 링크 이동하기
+            var v_delck = confirm("글을 삭제하시겠습니까?");
+            if(v_delck) {
+                location.href = "delete.html?pri_id=" + pri_id;
+            }  
+        }
+        
+        function f_cancel() {
+            alert("글 작성이 취소되었습니다.")
+            window.close();
+        }
+    </script>
+</body>
+</html>

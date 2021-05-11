@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <title>Document</title>
+</head>
+<body>
+    <div id="id_disp"></div>
+
+    <script>
+        function ngm(p_arg) {
+            console.log(p_arg);
+        }
+
+        $.ajax({
+            type:"get",
+            url:"https://api.exchangerate.host/latest",
+            success:function(p_rslt) {
+                console.log(JSON.stringify(p_rslt));
+            }
+        });
+    </script>
+</body>
+</html>

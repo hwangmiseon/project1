@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #id_pop {
+            display: none;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            color: yellow;
+            border: 1px solid olive;
+            border-radius: 10%;
+        }
+    </style>
+</head>
+<body>
+    <div id="id_pop" title="말풍선">
+        메세지 팝업으로 잠깐 생성됨
+        <input type=button value="OK" onclick="on_close()">
+    </div>
+    <div onmouseover="f_overMsg()">풍성</div>
+<script>
+var v_msg = document.getElementById("id_pop");
+function f_close() {
+    v_msg.style.display = "none";
+}
+function f_overMsg() {
+    v_msg.style.left = parseInt(event.clientX) + "px";
+    v_msg.style.top = parseInt(event.clientY) + "px";
+    v_msg.style.display = "block";
+}
+</script>
+</body>
+</html>

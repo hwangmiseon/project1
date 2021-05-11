@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+    // callback 함수 -> 말 그대로 뒤에(순서상) 부르는 함수 
+    function f_ygy(p_msg) {
+        alert(p_msg);
+    }
+
+    // 매개변수로 함수이름 또는 함수선언을 받음, 함수 이름()식으로 쓰면 그냥 실행되어버림
+    function f_paka(p_cb) {  // 매개변수로 함수를 받음, p_cb = f_ygy
+        p_cb("웰시코기");  // p_cb 는 f_paka 뒤에 불려서 callback, p_cb 안에 내용을 p_msg로 전달
+    }
+
+    f_paka(f_ygy); // 함수로 받거나
+    
+    f_paka(function(p_arg) {// 함수를 선언하거나
+        alert("안농 " + p_arg);
+    });
+
+</script>

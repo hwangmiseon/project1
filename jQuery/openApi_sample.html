@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+  <script>
+      /* Javascript 샘플 코드 */
+      
+      
+      var xhr = new XMLHttpRequest();
+      var url = 'http://www.kspo.or.kr/openapi/service/artReport3Service/getList'; /*URL*/
+      var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'서비스키'; /*Service Key*/
+      queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+      queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+      queryParams += '&' + encodeURIComponent('title') + '=' + encodeURIComponent('배구'); /**/
+      xhr.open('GET', url + queryParams);
+      xhr.onreadystatechange = function () {
+          if (this.readyState == 4) {
+              alert('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
+          }
+      };
+      xhr.send('');
+
+  </script>  
+
+</body>

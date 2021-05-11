@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="http://fonts.googleapis.com/earlyaccess/hanna.css"></script> -->
+    
+<style>
+        #id_disp {
+        width: 100%;
+        height: 100%;
+        border: 1px solid red;
+    } 
+    .hanna {
+        font-family: 'Hanna', serif;
+    }      
+</style>
+</head>
+<body>
+    <hr style="width:60%;height:5px;border:none;background-color: lightgray; " align="left">
+    <h1 class='hanna' style="font-size: 30px;color:lightgray;" align=center>게시판</h1>
+    <hr style="width:60%;height:5px;border:none;background-color: lightgray;" align="right">
+    <div id="id_disp" style="text-align: right;"></div>
+<script>
+    var v_disp = document.getElementById("id_disp");
+    var v_tbTitle = "noticeBoard";
+    var v_geulDatas = JSON.parse(localStorage.getItem(v_tbTitle));
+    
+    var v_tb = "<form action='' method=get align=center>";
+    v_tb += "<table border=1 width=100%";
+    v_tb += "<tr><td width=30>번호</td><td width=50>분류</td><td width=300>제목</td><td width=100>작성자</td><td width=100>날짜</td><tr>";
+    if(v_geulDatas) {
+        for(var i = 0; i < v_geulDatas.length; i++) {
+            v_tb += "<tr>" ;
+            v_tb += "<td>" + (i+1) + "</td>"; // 글 갯수에 따라 번호를 줌
+            v_tb += "<td>";
+                if(v_geulDatas[i].clas == "op_info") {
+                    v_tb += "정보";
+                }else if(v_geulDatas[i].clas == "op_ques") {
+                    v_tb += "문의";
+                }else if(v_geulDatas[i].clas == "op_buy") {
+                    v_tb += "삽니다";
+                }else if(v_geulDatas[i].clas == "op_sell") {
+                    v_tb += "팝니다";
+                }
+            v_tb += "</td>"; 
+            v_tb += "<td><a href=# onclick='f_read(" + v_geulDatas[i].prino +")'>" + v_geulDatas[i].title + "</a></td>"; 
+            v_tb += "<td>" + v_geulDatas[i].writer + "</td>"; 
+            v_tb += "<td>" + v_geulDatas[i].date + "</td>"; 
+            v_tb += "</tr>"
+        }
+        
+        v_tb += "</table></form>";
+    }
+    v_tb += "<a href='write.html' id='id_text'> 글쓰기 </a>";
+
+    v_disp.innerHTML = v_tb;
+
+    function f_read(p_prino) {
+        event.preventDefault();
+        window.open("read.html?pri_id=" + p_prino, "read", "left=50 top=50, width=600, height=800");
+    }
+</script>
+
+</body>
+</html>

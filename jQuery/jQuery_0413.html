@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+    <script src="myQuery_0413.js"></script>
+    
+<style>
+    /* div {
+        color: blueviolet;
+    } */
+</style>
+<body>
+    <img id="id_cat" src="../images/3.jpeg" width=50 height=50 alt=""><br>
+    <img id="id_dog" src="../images/20.jpg" width=55 height=65 alt=""><br>
+    <div id="cute">고양이</div>
+    <div class="cat">샴</div>
+    <div>노르웨이숲</div>
+    <div class="cat">코커스파니엘</div>
+    <div>댕댕이</div>
+
+    윤<input type=text size=3 value="윤">
+    가<input type=text size=3 value="가">
+    영<input type=text size=3 value="영">
+    만<input type=text size=3 value="만">
+    만<input type=text size=3 value="만">
+    세<input type=text size=3 value="세">
+
+    <script>
+
+
+        // $("div").css("background-color", "hotpink")
+        //         .eq(4)
+        //         .css("background-color", "black")
+        //         .css("color", "yellow")
+        //         .css("font-size", "4em");
+
+        // $("div").css("backgraound-color", "hotpink");
+        // $("div").eq(4).css("font-size", "3em");
+        // alert($("div").eq(4).css("font-size"));
+        // alert($("div").eq(4).css("background-color"));
+
+
+        /* $("div").css("background-color", "hotpink")
+                .eq(4)
+                .css("background-color", "black")
+                .css("color", "yellow")
+                .css("font-size", "4em")
+                .end()
+                .css({
+                    "height":"200px",
+                    "color":"blue",
+                    "font-style":"bold",
+                    "text-align":"center",
+                    "border":"3px solid white"
+                }); */
+
+/* *************************************************************************************** */
+        // alert($("div").css("color"));   // 못읽어옴
+        /* 실시간으로 스타일 값 읽어오기 */
+        /* 엔진에 걸린 모든 css 스타일 읽어옴 */
+        // console.log(window.getComputedStyle(document.getElementById("cute"))["font-size"]);
+
+/* *************************************************************************************** */
+        // alert($("input").val());
+        // $("input").val("송");
+ /*        $("input").val(function(p_inx, p_val) {
+            if(p_inx % 2 == 1) {
+                return "폼폼";
+            }
+            return p_val; // 원래 값 그래도 리턴
+        }); */
+
+ /* *************************************************************************************** */
+
+ $.ajax({
+     type:"get",
+     url:"진짜jQuery2.html",
+     success:function(p_rslt){
+        alert(p_rslt);
+     }
+ });
+
+ $.ajax({
+     type:"get",
+     url:"콜백함수.html",
+     success:function(p_rslt){
+        alert(p_rslt);
+     }
+ });
+
+
+    </script>
+</body>
+</html>

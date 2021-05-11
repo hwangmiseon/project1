@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../ckeditor4/ckeditor.js"></script>
+</head>
+<body>
+    <h1 align=center>게시판 글 쓰기</h1>
+    <hr style="width:100%;height:3px;border:none;background-color: lightgray;">
+    
+    <!-- 글분류(정보, 문의, 삽니다, 팝니다), 작성자, 제목, 내용(edit), 날짜(자동), 조회수 -->
+    <form action="write_action.html">
+        <table align=center >
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;글분류</td>
+                <td><select class="form-select-lg" aria-label=".form-select-lg" name="nm_clas" id="id_clas">
+                    <option value="op_0">선택하세요</option>
+                    <option value="op_info">정보</option>
+                    <option value="op_ques">문의</option>
+                    <option value="op_buy">삽니다</option>
+                    <option value="op_sell">팝니다</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height:3px;" ><hr style="height:1px; border:none; background-color: lightgray;" ></td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자</td>
+                <td><input type=text name="nm_writer" value="" style="width:200px; border-top: lime; border-left: lime; border-right: lime; border-color:lightgray;" autocomplete=off required></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height:3px;" ><hr style="height:1px; border:none; background-color: lightgray;" ></td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목</td>
+                <td><input type=text name="nm_title" value="" style="width:200px; border-top: lime; border-left: lime; border-right: lime; border-color:lightgray;" autocomplete=off required ></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height:3px;" ><hr style="height:1px; border:none; background-color: lightgray;" ></td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내용</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height:3px;" ><hr style="height:1px; border:none; background-color: lightgray;" ></td>
+            </tr>
+            <tr>
+                <td colspan="2"><textarea name="nm_cont"></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td align="right">
+                    <input type="reset" value="다시쓰기" onclick="f_reset()">
+                    <input type="submit" value="저장">
+                    <input type=button value="취소" onclick="f_cancel()">
+                </td>
+            </tr>
+        </table>
+
+    </form>
+
+    <script>
+        CKEDITOR.replace( 'nm_cont', {
+            height: 300
+        });
+
+        // CKEDITOR 값 지우기
+        function f_reset() {
+            CKEDITOR.instances.nm_cont.setData("");
+        }
+
+        function f_cancel() {
+            alert("글 작성이 취소되었습니다.")
+            window.close();
+        }
+    </script>
+</body>
+</html>

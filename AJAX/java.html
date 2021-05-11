@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<script>
+/*
+var v_test = {};
+v_test.bbb = "흥";
+v_test.aaa = "추가";
+delete v_test.aaa;   // 속성 지울 때 delete, 배열은 delete로 안 지워짐, splice사용
+console.log(v_test);
+*/
+
+//java.util.ArrayList  add(value),get(index),set(index,value),remove(index),clear(),size()
+var java = {};
+java.util = {};
+java.util.ArrayList = function(){
+    this.count = 0;
+    // 메소드
+    this.add = function(p_val){
+        this[this.count] = p_val;   
+        this.count++;
+    }
+    this.get = function(p_inx){
+        return this[p_inx];
+    }
+
+    this.set = function(p_inx,p_val){
+        this[p_inx] = p_val;
+    }
+
+    this.clear = function(){
+        //정확히는
+        //for(var v_attr in this){   // 속성값 읽어오기
+        //    delete this[v_attr];
+        //}
+        for(var i=0; i<this.count; i++){
+            delete this[i];
+        }
+        this.count = 0;           // 다 지웠으니 count를 0으로
+    }
+
+    this.size = function(){
+        return this.count;
+    }
+
+    this.remove = function(p_inx){
+        for(var i=p_inx; i<this.count-1; i++){
+            this[i] = this[i+1];               // 값을 앞으로 한개씩 땡기기
+        }
+        delete this[this.count-1];  // 마지막 껑 지웡
+        this.count--;               // 
+    }
+}
+
+var v_myArrList = new java.util.ArrayList();
+//console.log(v_myArrList);  // 눈으로 확인
+v_myArrList.add("러블리 윤가영");
+v_myArrList.add("아스크림 대장님");
+v_myArrList.add("이름 장두언");
+v_myArrList.add("이름 김태정");
+v_myArrList.add("이름 정찬웅");
+v_myArrList.add("이름 짐 주헌");
+
+v_myArrList.remove(2);
+console.log(v_myArrList);  // 5개만 남아있어야 함
+
+/*
+console.log(v_myArrList.size());//2
+v_myArrList.clear();
+console.log(v_myArrList);
+*/
+
+
+
+</script>

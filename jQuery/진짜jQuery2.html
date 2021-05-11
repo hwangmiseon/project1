@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        
+        <title>Document</title>
+        <style>
+                .namu {
+                        color: gold;
+                        background-color: darkblue;
+                }
+        </style>
+</head>
+
+<body>
+        <div id="id_paka">파카</div>
+        <div id="id_disp"></div>
+        <input type=button id="id_paka1" value="누르기1">
+        <input type=button id="id_paka2" value="누르기2">
+        <input type=button id="id_gg" value="show-hide">
+
+        <script>
+                /* $(document).ready(function () {
+                        $("div").html("window onload 이벤트와 비슷하다");
+                }); */
+
+                /* windoe.onload랑 비슷, 정확히는 DOMContentLoaded 이벤트와 같음 */
+                /* windoe.onload : 웹페이지안의 이미지를 다 읽은후에 불러옴, DOMContentLoaded 는 바로 불러옴 */
+                /* $(function () {
+                        $("div").html("즉시 실행 함수 바뀝니다");
+                }); */
+
+                /* $(function () {
+                        $("#id_disp").css("width", "200px").css("height", "200px")
+                                     .css("border", "2px solid pink");
+                }); */
+
+                // jQuery에서 이벤트1 (-> 클릭하면 콜백함수 실행)
+                /* $("#id_paka").click(function() {
+                        alert("클릭했음@@");
+                }); */
+
+                /* on = onclick , on 메소드로 this.. */
+                /* $("#id_paka").on("click", function() {
+                        alert("메머드");
+                }); */
+                
+                /* 버튼을 누르는거에 따라 this값이 알아서 들어옴 */
+                /* $("input:button").on("click", function() {
+                   console.log(this);
+                }); */
+
+
+                /* S.fn.init() 으로 나오면 jQuery 객체임 */
+                /* css 는 jQuery 객체여야 사용가능 */
+                // console.log($("input:button"));
+
+
+                // $("input:button").on("click", function() {
+                //   /*  this.css({
+                //            color:"yellow",
+                //            backgroundColor:"black"
+                //    }); */
+                //    /* 일반 dom객체를 $로 둘러싸주기만 하면 jQuery객체로 바뀜 */
+                //    $(this).css({
+                //            color:"yellow",
+                //            backgroundColor:"black"
+                //    });
+                // });
+
+/********************************************************************************/
+                // $("input:button").eq(1).on("click", function() {
+                //         // $("<img></img>")      // document.createElement("img");
+                //         /* append : 오른쪽걸 왼쪽에 붙임, appendto : 자기자신을 어딘가에 붙임 */
+                //         $("<img></img>").attr("width", 200)
+                //                         .attr("height", 200)
+                //                         .attr("src", "../images/20.jpg")
+                //                         .appendTo($("#id_disp"));
+
+                //         $("#id_disp").append($("<h1>허스키</h1>")
+                //                      .css("color", "yellow")
+                //                      .css("backgroundColor", "black"));
+                // });
+
+                        
+                // $("input:button").eq(1).on("click", function() {
+                //         // $("<img></img>")      // document.createElement("img");
+                //         /* append : 오른쪽걸 왼쪽에 붙임, appendto : 자기자신을 어딘가에 붙임 */
+                //         $("<img></img>").attr("width", 200)
+                //                         .attr("height", 200)
+                //                         .attr("src", "../images/20.jpg")
+                //                         .appendTo($("#id_disp"));
+
+                //         $("#id_disp").append($("<div>허스키</div>")
+                //                      .css("color", "yellow")
+                //                      .css("backgroundColor", "black"))
+                //                      .css("font-size", "4em");
+                // }).on("mouseover", function(){
+                //         // alert("시베리안");
+                //         $("#id_paka").remove();
+                // });
+                
+
+                /* $("#id_gg").on("click", function(){
+                        // $("#id_paka").hide().show().addClass("namu");
+                        $("#id_paka").hide().show().toggleClass("namu");
+                }); */
+
+                /* jQuery의 each */
+                /* $("input").each(function(p_inx, p_ele){
+                        // console.log(this);      
+                        // console.log(p_ele);
+                        // this == p_ele
+                        if(this.id == "id_paka1") $(this).val("GGG")
+                }); */
+
+
+                // $.each(배열, 콜백)
+                /* var v_arr = ["샴", "tia", "쵸비", "chobi"];
+                var v_obj = {
+                        "aa":"에이",
+                        "bb":"ㅠㅠ"
+                }
+                $.each(v_obj, function(p_inx, p_val){
+                        alert(p_inx + " " + p_val);
+
+                }); */
+
+                // $("").each() -> 생성자를 부름, 동적 메소드 -> 객체가 먼저 생성되어야 사용할 수 있다
+                // $.each() -> 생성자를 안부름, 정적(static) 메소드 -> 객체 생성없이 바로 사용할 수 있다
+
+                
+
+
+        </script>
+        <div>고양이 마일로 쵸비</div>
+</body>
+
+</html>

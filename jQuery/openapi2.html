@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../images/20.jpg" type="image/x_icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="id_disp"></div>
+
+    <input type=button value="누르세요" id="id_btn">
+    <script>
+        // $ 뒤에 ()없이 생성하는것 ->
+        /* $("#id_btn").on("click", function() {
+            $.ajax({
+                type:"get",
+                url:"https://api.exchangerate.host/latest",
+                data: "base=USD",
+                success:function(p_rslt) {
+                    console.log(p_rslt);
+                }
+            });
+        }); */
+
+/*         $("#id_btn").on("click", function() {
+            $.ajax({
+                type:"get",
+                url:"https://api.exchangerate.host/timeseries",
+                // data: "base=USD&start_date=2020-04-01&end_date=2020-04-05",
+                success:function(p_rslt) {
+                    console.log(p_rslt);
+                }
+            });
+        }); */
+
+        $("#id_btn").on("click", function() {
+            // 상황에 따라서 openapi는 데이터를 캐쉬해서 쓰는 것이 효율적
+            // 특히 요구 건수마다 비용을 지불한다면 캐쉬해서 사용하는 것이 당연지사
+            if(localStorage.getItem("April")) {
+
+                alert("데이터가 이미 있으니, 캐쉬된 걸 사용해 주세요 감사!");
+                return;
+            }
+
+            $.ajax({
+                type:"get",
+                url:"https://api.exchangerate.host/timeseries",
+                data: "base=USD&places=2&start_date=2020-04-01&end_date=2020-04-15",
+                success:function(p_rslt) {
+                    console.log(p_rslt);
+                    // KRW  JPY
+                    // console.log(p_rslt.date, p_rslt.rates.KRW, " ", p_rslt.rates.JPY);
+                    
+
+                    /*
+                        table로
+                        날짜      원      엔
+                        해서 id_disp에 출력하세요
+                    */
+                //    console.log(p_rslt.rates["2020-04-01"].KRW);
+                   var v_rates = p_rslt.rates;
+                   /* var v_tbl = "<table border=2>";
+                    v_tbl += "<tr><td>날짜</td><td>원</td><td>엔</td></tr>"
+                   for (const v_date in v_rates){
+                       v_tbl += "<tr>";
+                        v_tbl += "<td>" + v_date + "</td>";
+                        v_tbl += "<td>" + v_rates[v_date].KRW + "</td>";
+                        v_tbl += "<td>" + v_rates[v_date].JPY + "</td>";
+                        v_tbl += "</tr>";
+                        //  console.log(v_date, v_rates[v_date].KRW, v_rates[v_date].JPY);
+                   }    
+                   v_tbl += "</table>";
+                   $("#id_disp").html(v_tbl); */
+
+                   /* [
+                       {
+                           date: 날짜,
+                           krw: 금액,
+                           JPY: 금액
+                       },
+                       {
+
+                       },
+                       {
+
+                       }
+                   ]
+                   옮겨담아 배열 로컬스토리지에 저장 */
+
+                    var v_dataArr = []; // 빈배열
+                    for (const v_data in v_rates) {
+                        var v_jdata = {};
+                        v_jdata.date = v_data;
+                        v_jdata.KRW = v_rates[v_data].KRW;
+                        v_jdata.JPY = v_rates[v_data]["JPY"];
+                        v_dataArr.push(v_jdata);    // 만든 json 배열에 넣기
+                    }
+
+                    /* v_dataArr을 날짜 역순으로 정렬하시오 */
+
+                    v_dataArr.sort(function(a, b){
+                        return b.date.replaceAll("-","") - a.date.replaceAll("-","");
+                    }); // 배열 확인
+
+
+                    localStorage["April"] = JSON.stringify(v_dataArr);
+                    // localStorage.setItem("April", JSON.stringify(v_dataArr));
+
+                    /* 
+                        마지막 시간 과제는 환율데이터(KRW 와 JPY을 차트에 표시해 보기)
+                    */
+
+                }
+            });
+        });
+
+        
+    </script>
+</body>
+</html>

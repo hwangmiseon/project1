@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- required를 적용하려면 submit을 사용해야함 -->
+    <form id="id_form" action="start.html">
+        치즈고양이<input type=text name="cheeze" value="" required><br>
+        크림히어로즈<input type=text name="cream" value="" required><br>
+        <input id="id_btn" type=submit value="전송">
+    </form>
+    <script>
+        var v_form = document.querySelector("#id_form");
+        v_form.onsubmit = function() {
+            event.preventDefault();
+            /*
+                아작스 코드
+            */
+        }
+
+        // document.querySelector("#id_btn").onclick = function() {
+        //     event.preventDefault(); // submit버튼의 전송기능 막기
+        //     /*
+        //         아작스 코드
+        //     */
+        // }
+        
+    </script>
+</body>
+</html>

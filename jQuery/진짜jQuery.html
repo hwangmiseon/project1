@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <input type=text value="고양이"><br>
+    <div>노르웨이숲</div>
+    <!-- 샴<input type=checkbox name="nm_-aaa" value="샴" checked>
+    삼색이<input type=checkbox name="anm_aba" value="삼색이" checked>
+    고등어<input type=checkbox name="n_maca" value="고등어"><br> -->
+
+    샴<input type=checkbox name="nm_aa" value="샴" disabled readonly>
+    삼색이<input type=checkbox name="nm_aa" value="삼색이" checked>
+    고등어<input type=checkbox name="nm_aa" value="고등어"><br>
+
+    <select>
+        <option value="마">마일로</option>
+        <option value="쵸" selected>쵸비</option>
+        <option value="꼬">꼬부기</option>
+    </select>
+
+    <script>
+        
+        /* $("input").val("러시안블루");
+        $("div").html("<h1>그레이</h1>");
+        $("div").css("backgroundColor", "red").css("color", "white"); */
+        
+
+        /* $("input[type=checkbox]:checked").val() -> return 한 값이 문자열이므로 문자열로 넣을수 있음 */
+        // $("input[type=checkbox]:checked").val("ssub");
+
+        /* "select > option:checked" 도 가능 =selected */
+/*         console.log($("select > option:nth-child(2)").html());  // nth-child 는 table에서 사용하기 편함
+        console.log($("select > option:eq(0)").html()); */
+
+/* *************************************************************************************** */
+        /* name안에 nm_ 있는것만 선택, '_'있는거 가져올때 */
+        // console.log($("input[name *=nm_"));
+        /* nm_ 독립된 하나의 단어로 된것만 선택, '_'없는거 가져올때 */
+        // console.log($("input[name ~=nm_"));
+
+        /* ':' 가상클래스, sudo 클래스 */
+        // console.log($("input:button"));
+
+/* *************************************************************************************** */
+        /* attr vs prop 잘 기억하기 */
+        /* alert($("input[name=nm_aa]").attr("checked"));
+        alert($("input[name=nm_aa]").prop("checked")); */
+        /* prop : true, false */
+        alert($("input[name=nm_aa]").prop("disabled")); 
+        alert($("input[name=nm_aa]").prop("readonly"));
+
+</script>
+</body>
+</html>

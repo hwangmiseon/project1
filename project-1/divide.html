@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    * {
+        margin: 0px;
+    }
+    #id_disp {
+        display: flex;
+        /* flex–direction: row; */
+        width: 100%;
+        height: 100vh;
+        border: 1px solid red;
+    }
+    #id_lpage {
+        display: inline-block;
+        vertical-align: top; 
+        width: 25%;
+        height: 100vh;
+        border: 1px solid green;
+        /* background-color:green; */
+    }
+    #id_rpage {
+        display: inline-block;
+        width: 74%;
+        height: 100%;
+        border: 1px solid orange;
+        /* background-color: orange; */
+        text-align: center;
+        /* line-height: 100vh; */
+    }
+    .cl_llist {
+        width: 100%;
+        height: 100px;
+        border: 1px solid olivedrab;
+        text-align: center;
+        line-height: 100px;
+    }
+    .cl_rlist {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border: 1px solid brown;
+    }
+    .cl_iframe {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+</style>
+</head>
+<body>
+    <div id="id_disp">
+        <div id="id_lpage">
+            <div class="cl_llist"></div>
+            <div class="cl_llist"><h5>커뮤니티 소개</h5></div>
+            <div class="cl_llist"><h5>고양이 종류</h5></div>
+            <div class="cl_llist"><h5>앨범</h5></div>
+            <div class="cl_llist"><h5>게시판</h5></div>
+        </div>
+        <div id="id_rpage">
+            <div class="cl_rlist">
+                <iframe class="cl_iframe" src="./notice_board/list.html" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

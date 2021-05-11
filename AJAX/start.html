@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div id="id_disp"></div>
+<input type=button value="누름">
+<input type=button value="누름"><br>
+강쥐이름<input type=text value="파카">
+<input type=button value="누름">
+<input type=button class="paka" value="제약사항확인">
+    <script>
+        /*
+        아작스 제약사항 CORS(Cross Origin Resource Sharing), 또는 Same Origin 정책
+        Origin(오리진) 구성요소
+        프로토콜 + 서버(도메인명) + 포트 (3개 중에 1개라도 다르면 다른 오리진)
+        A : http://localhost:80
+        B : http://localhost:8080 B는 A와 포트번호가 달라서 다른 오리진
+        C : https://localhost:80 C는 A,B와 프로토콜이 다르고, B하고는 포트번호도 다름, 다른 오리진
+
+        서버세팅으로 오리진을 풀어줄수도 있는데, 보안적인 문제 때문에 기본적으로 안 풀어줌
+        */
+        document.querySelector(".paka").onclick=function() {
+            var v_ajax = new XMLHttpRequest();
+            v_ajax.open("get", "http://naver.com/index.html", true);
+            v_ajax.onreadystatechange = function() {
+                if(v_ajax.readyState == 4 && v_ajax.status == 200) {
+                    alert(v_ajax.responseText);
+                }
+            }
+            v_ajax.send();
+        }
+
+        /*
+        아작스로 페이지를 만들면 한 페이지에서 모든 걸 할 수 있어서 멋진 말로
+        Single Page Application 이라고 합니다. SPA
+        */
+        document.querySelectorAll("input")[3].onclick = function() {
+            var v_gangName = document.querySelector("input[type=text]").value;
+            var v_ajax = new XMLHttpRequest();
+            v_ajax.open("get", "dog.php?dog="+v_gangName, true);    // url에 서버프로그램이 오면 그 실행결과를 돌려받는다
+            v_ajax.onreadystatechange = function() {
+                if(v_ajax.readyState == 4 && v_ajax.status == 200) {
+                    // alert(v_ajax.responseText);
+                    document.querySelector("#id_disp").innerHTML += v_ajax.responseText;
+                }
+            }
+            v_ajax.send();
+        }
+
+        document.querySelectorAll("input")[1].onclick = function() {
+            var v_ajax = new XMLHttpRequest();
+            v_ajax.open("get", "cat.json",true);
+            v_ajax.onreadystatechange = function() {
+                if(v_ajax.readyState == 4 && v_ajax.status == 200) {
+                    // alert(v_ajax.responseText);
+                    var v_json = JSON.parse(v_ajax.responseText);   // 넘어온 문자열이 json형식으로 되어 있으니 변환
+                    // console.log(v_json.cat1);
+                    
+                    for(var cute in v_json) {
+                        var v_str = cute;
+                        // var tblmunja = "<table border=1>";
+                        // console.log(cute, v_json[cute]);
+                        for(var ccute in v_json[cute]) {
+                            v_str += " " + v_json[cute][ccute];
+                            // console.log(cute, " ", ccute, " ", v_json[cute][ccute]);
+                        }
+                        console.log(v_str);
+                    }
+                }
+            }
+            v_ajax.send();
+        }
+
+        document.querySelector("input").onclick = function(){
+        var v_ajax = new XMLHttpRequest();
+        v_ajax.open("get","hms.xml",true);
+        v_ajax.onreadystatechange = function(){
+            if(v_ajax.readyState == 4 && v_ajax.status == 200){
+                console.log(v_ajax.responseXML);    // xml 받을때 responseXML 사용
+                var v_xmlDoc = v_ajax.responseXML;
+                // var v_animal = v_xmlDoc.getElementsByTagName("animal");
+                var v_animal = v_xmlDoc.querySelectorAll("dog");
+                // console.log(v_animal);
+                var v_tblStr = "<table border=1>";
+                v_tblStr += "<tr><th>이름</th><th>나이</th></tr>"   
+                for(var i = 0; i < v_animal.length; i++) {
+                    v_tblStr += "<tr>";
+                        var v_childs = v_animal[i].children;    
+                    for(var j=0; j< v_childs.length; j++){
+                        v_tblStr += "<td>" + v_childs[j].innerHTML + "</td>";
+                    }
+                    v_tblStr += "</tr>";
+                }
+                v_tblStr += "</table>";
+                document.querySelector("#id_disp").innerHTML += v_tblStr;
+            }
+        }
+        v_ajax.send();
+    }
+
+        // ajax - Asynchronous JAvascript Xml -> 비동기 자바스크립트 xml(json)
+        // 나온 이유 : form action 은 대부분 비효율적 페이지의 일부 내용만 바꾸려 해도
+        // 페이지가 넘어가야 함
+        // 위의 상황을 개선하기 위해서 페이지는 그대로 두고 뒤로 몰래 통신할 수 있는 객체를 만듬
+        // 서버에서 데이터를 받아서 자바스크립트로 페이지의 바꾸고 싶은 부분만 바꿈 아주 효율적
+        // 사용자도 편함, 서버의 부하도 줄일 수 있음
+        // 초기에 신뢰가 없어서 잘 사용되지 않다고 구글이 gmail과 구글 map으로 아작스가 좋음을 증명
+        var v_ajax = new XMLHttpRequest();
+        v_ajax.open("get","cat.csv",true);
+        v_ajax.send();
+        v_ajax.onreadystatechange = function(){
+       // alert("통신객체 상태값:"+v_ajax.readyState);// 상태 값 확인
+        if(v_ajax.readyState == 4 && v_ajax.status == 200){
+            var v_readContent = v_ajax.responseText.split("\n");
+            var v_tblStr = "<table border=1>";
+            for(var i=0; i<v_readContent.length; i++){
+                v_tblStr +="<tr>";
+                var v_items = v_readContent[i].split(",");
+                for(var j=0; j<v_items.length; j++){
+                    v_tblStr += "<td>"+ v_items[j] + "</td>";
+                }
+                v_tblStr +="</tr>";
+            }
+            document.querySelector("#id_disp").innerHTML = v_tblStr;
+        }
+    }
+
+ //   alert(v_ajax.responseText); //??? 아무것도 뜨지 않는 것이 비동기로 실행된다는 사실을 증명
+
+    </script>
+</body>
+</html>

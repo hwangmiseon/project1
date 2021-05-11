@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/jsp.js"></script>
+</head>
+<body>
+    <table align=center >
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;글분류</td>
+            <td><select class="form-select-lg" aria-label=".form-select-lg" name="nm_clas" id="id_clas">
+                <option value="op_0">선택하세요</option>
+                
+                <option value="op_info" selected>정보</option>
+                <option value="op_ques">문의</option>
+                <option value="op_buy">삽니다</option>
+                <option value="op_sell">팝니다</option>
+                </select>
+            </td>
+        </tr>
+        </table>
+</body>
+
+<script>
+var s2 = document.getElementById("id_clas");
+s2.value = request.getParameter("opvl");
+</script>
+</html>

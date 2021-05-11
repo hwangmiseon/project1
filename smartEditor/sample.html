@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./ckeditor4/ckeditor.js"></script>
+    <title>Document</title>
+</head>
+<body>
+        <textarea id="editor"  name="nm_editor"></textarea>
+    <script>
+        CKEDITOR.replace( 'editor', {
+            height: 300,
+            // filebrowserUploadUrl: "/CKEditor/serverPhp.php?type=file",
+            filebrowserUploadUrl: "./serverPhp.php?type=file",
+            filebrowserImageUploadUrl: "./serverPhp.php?type=image"
+        });
+ 
+    </script>
+</body>
+</html>

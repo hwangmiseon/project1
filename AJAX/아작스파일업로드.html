@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="id_disp"></div>
+    <input type=file id="id_file" value="" accept=".jpg,.png,.gif,.jpeg"><br>
+    <input type=button id="id_sub" value="오성현 작심3일 담배 파일에 숨긴 담배">
+<script>
+    var v_btn = document.querySelector("#id_sub");
+    var v_file = document.querySelector("#id_file");
+
+    v_btn.addEventListener("click",function(){
+
+        var v_formData = new FormData(); // 매개변수로 form객체를 받지 않아서 빈 form데이터
+       
+        console.log(v_file.files); // 확인
+        //enctype multi-part/formdata 는 안해줘도 됨. formData가 자동으로 해줌
+        v_formData.append("fileToUpload",v_file.files[0]);
+
+        var v_ajax = new XMLHttpRequest();
+        v_ajax.open("post","fileupload.php",true); 
+        v_ajax.onreadystatechange = function(){
+            if(v_ajax.readyState==4 && v_ajax.status == 200){
+                alert(v_ajax.responseText);
+                var v_path = "./uploads/" + v_ajax.responseText;
+                var v_img = document.createElement("img");
+                v_img.src = v_path;
+                v_img.setAttribute("width","100");
+                v_img.setAttribute("height","100");
+                document.querySelector("#id_disp").appendChild(v_img);
+
+                //document.querySelector("#id_disp").innerHTML = v_ajax.responseText;
+            }
+        }
+        v_ajax.send(v_formData); 
+    });
+</script>
+</body>
+</html>

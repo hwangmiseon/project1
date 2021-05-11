@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-enterprise/dist/styles/ag-theme-alpine.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="myGrid" style="height: 400px; width:500px;" class="ag-theme-alpine"></div>
+    <script>
+        // 컬럼 정의
+        var columnDefs = [
+            { field: "이름", checkboxSelection: true, sortable:true, filter:true },
+            { field: "나이", sortable:true, filter:true},
+            { field: "별명", sortable:true, filter:true }
+        ];
+
+        // 데이타 기술
+        var rowData = [
+            { "이름": "꼬부기", "나이": "5", "별명": "흰둥이" },
+            { "이름": "쵸비", "나이": "2", "별명": "얼룩이" },
+            { "이름": "마일로", "나이": "7", "별명": "고양이탈을쓴강아지" },
+            { "이름": "토끼", "나이": "6", "별명": "도도" },
+            { "이름": "꼬부기", "나이": "5", "별명": "흰둥이" },
+            { "이름": "쵸비", "나이": "2", "별명": "얼룩이" },
+            { "이름": "마일로", "나이": "7", "별명": "고양이탈을쓴강아지" },
+            { "이름": "토끼", "나이": "6", "별명": "도도" },
+            { "이름": "꼬부기", "나이": "5", "별명": "흰둥이" },
+            { "이름": "쵸비", "나이": "2", "별명": "얼룩이" },
+            { "이름": "마일로", "나이": "7", "별명": "고양이탈을쓴강아지" },
+            { "이름": "토끼", "나이": "6", "별명": "도도" },
+            { "이름": "꼬부기", "나이": "5", "별명": "흰둥이" },
+            { "이름": "쵸비", "나이": "2", "별명": "얼룩이" },
+            { "이름": "마일로", "나이": "7", "별명": "고양이탈을쓴강아지" },
+            { "이름": "토끼", "나이": "6", "별명": "도도" },
+            { "이름": "꼬부기", "나이": "5", "별명": "흰둥이" },
+            { "이름": "쵸비", "나이": "2", "별명": "얼룩이" },
+            { "이름": "마일로", "나이": "7", "별명": "고양이탈을쓴강아지" },
+            { "이름": "토끼", "나이": "6", "별명": "도도" }
+        ];
+
+        // 그리드 생성할 때 필요한 옵션
+        var gridOptions = {
+            columnDefs: columnDefs,
+            rowData: rowData,
+            // 페이지 설정
+            pagination:true,
+            paginationAutoPageSize:true,
+            // paginationPageSize:6
+        };
+
+        // 그리드 생성을 위해서 그릴장소와 옵션이 필요
+        document.addEventListener('DOMContentLoaded', function(){
+           var gridDiv = document.querySelector('#myGrid');
+           new agGrid.Grid(gridDiv, gridOptions);
+    });
+    </script>
+</body>
+</html>
